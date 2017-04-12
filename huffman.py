@@ -6,7 +6,7 @@ text = text.lower()
 
 
 class huffman:
-    
+
     def __init__(self, text):
         self.text = text
         self.slownik = {}
@@ -19,13 +19,14 @@ class huffman:
             if self.slownik.has_key(letter) == False:
                 self.slownik[letter] = 1
             else:
-                self.slownik[letter] = self.slownik[letter] +1           
+                self.slownik[letter] = self.slownik[letter] +1
 
     def createTreeTable(self):
-        
+
         for element in self.slownik:
-            
+
             self.treeTable.append(Tree(self.slownik[element],element))
 
 
 
+     
