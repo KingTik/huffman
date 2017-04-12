@@ -3,7 +3,7 @@ from copy import copy, deepcopy
 
 class Tree:
 
-    def __init__(self, key, value):
+    def __init__(self, key, value=None):
         self.key = key
         self.value = value
         self.right = None
@@ -21,10 +21,10 @@ class Tree:
     def getLeft(self):
         return copy(self.left)
 
-    def putRight(self, key, value):
+    def putRight(self, key, value=None):
         self.right = Tree(key, value)
 
-    def putLeft(self, key, value):
+    def putLeft(self, key, value=None):
         self.left = Tree(key, value)
 
     def checkRight(self):
