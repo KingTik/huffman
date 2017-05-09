@@ -8,7 +8,7 @@ import operator
 
 
 class huffman:
-
+    """ konstruktor przyjmuje string z tekstem na podstawie ktorego ma stworzyc drzewo. do budowy drzewa trzeba wywolac metode buidTree() """
 
 
     def __init__(self, text):
@@ -20,6 +20,7 @@ class huffman:
 
 
     def coutnProb(self):
+        """ na podstawie tekstu podanego w konstruktorze zlicza czestosc wystepowania kazdego znaku """
         for letter in self.text:
             if self.slownik.has_key(letter) is False:
                 self.slownik[letter] = 1
@@ -32,6 +33,9 @@ class huffman:
 
 
     def createTreeTable(self):
+        """ tworzy tablice ktorego elementami sa drzewa o jednym wezle (litera, czestosc_wystepowania) """ 
+
+        self.coutnProb()
 
         for element in self.slownik:
             tmp = Tree(int(element[1]), str(element[0]))
@@ -39,34 +43,52 @@ class huffman:
 
 
     def buildTree(self):
+        """ buduje pelne drzewo huffmana """
+        self.createTreeTable()
 
-        while len(self.treeTable) >= 2:
-            
+        while len(self.treeTable) >= 2: #dopoki jest wiecej niz jeden element w tablicy
+            #zdjecie 2 elementow
             tmp1 = self.treeTable.pop(0)
             tmp2 = self.treeTable.pop(0)
+            #polaczenie w nowe dwrzewko
             newTree = Tree(tmp1.key + tmp2.key, tmp1.key + tmp2.key)
             newTree.left = tmp1
             newTree.right = tmp2
+            #wstawienie drzewka z powrotem do listy
             self.treeTable.insert(0, newTree)
-        
+        #gotowe drzewo
         self.drzewokodowe = self.treeTable[0]
 
     def letterCode(self, letter,node=None, code = ""):
-        
+
+        """ przechodzi rekurencyjnie cale drzewo zeby ustalic jaki kod ma zadana litera """
+
         if node is None:
             node = self.drzewokodowe
 
-        if node.getValue() == letter:
+        if node.getValue() == letter:# koniec drzewa - zwracanie wyniku
             return code
-        if node.checkLeft() is True:
+        if node.checkLeft() is True: # jezeli jest na lewo to dodanie do kodu 0
             tmp = self.letterCode(letter,node.left, code+'0')
             if tmp is not None:
                 return tmp    
-        if node.checkRight() is True:
+        if node.checkRight() is True: # jezeli jest na prawo to dodanie do kodu 1
             tmp = self.letterCode(letter,node.right, code+'1')
             if tmp is not None:
                 return tmp
         
+
+    def displayStats(self):
+        """ wyswietlanie czestosci wystepowania poszczegolnych liter """
+        if len(self.slownik) > 0:
+            for element in  self.slownik:
+                print "litera: " + str(element[0]) + " czestosc: "+str(element[1]) +"/" + str(self.len)
+                
+    def displayTree(self):
+        """ wyswietla zbudowane drzewo huffmana o ile takie istnieje """
+        if self.drzewokodowe is not None:
+            self.drzewokodowe.display()
+
 
 
 
@@ -74,13 +96,13 @@ text = "Pok pok disrupt austin prism"
 text = text.lower()
 
 kod = huffman(text)
-kod.coutnProb()
-kod.createTreeTable()
+
 
 
 kod.buildTree()
 
-kod.drzewokodowe.display()
+kod.displayTree()
+kod.displayStats()
 
 #print kod.letterCode('m')
 
