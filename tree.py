@@ -44,8 +44,10 @@ class Tree:
         print '-'*level + str(self.getValue())
 
         if self.checkLeft()==True:
+            
             self.getLeft().display(level+1)
         if self.checkRight()==True:
+            
             self.getRight().display(level+1)
 
     def insert(self, key, value):
@@ -58,7 +60,7 @@ class Tree:
             tmp = self
 
             while(done == False):
-                if tmp.key > key:
+                if tmp.key >= key:
                     #to the left
                     if tmp.checkLeft() == True:
                         tmp = tmp.left
@@ -76,13 +78,13 @@ class Tree:
 
 
 
+
 '''
 drzewo = Tree(100, 'a')
-drzewo.insert(101,'c')
+drzewo.insert(100,'c')
 drzewo.insert(102, 'f')
 drzewo.insert(2, 'k')
 drzewo.display()
-
 
 
 a=3
